@@ -1,16 +1,11 @@
 package com.faw.usertestall;
 
-import com.baomidou.mybatisplus.core.conditions.interfaces.Func;
 import com.faw.usertestall.domain.entity.gen.User;
 import com.faw.usertestall.util.DaoUtils;
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.function.Function;
 
 /**

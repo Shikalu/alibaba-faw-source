@@ -26,6 +26,11 @@ public class MybatisTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         User user = sqlSession.selectOne("com.faw.usertestall.mapper.gen.UserMapper.selectByPrimaryKey", 1L);
         System.out.println(user);
+        //二级缓存测试
+        sqlSession.close();  //只有在前一个缓存关闭或提交后，第二个才能用，否则无法从缓存获取查询结果，无法实现共享
+        SqlSession sqlSession2 = sqlSessionFactory.openSession();  //二级缓存测试需要不同的sqlsession共享，创建不同的测试
+        User user2 = sqlSession2.selectOne("com.faw.usertestall.mapper.gen.UserMapper.selectByPrimaryKey", 1L);
+        System.out.println(user2);
     }
 
     @Test
