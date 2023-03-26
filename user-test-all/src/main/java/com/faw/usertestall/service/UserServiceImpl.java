@@ -9,6 +9,7 @@ import com.faw.usertestall.domain.dto.UserDTO;
 import com.faw.usertestall.domain.dto.UserQueryDTO;
 import com.faw.usertestall.domain.entity.UserDO;
 import com.faw.usertestall.mapper.UserMapper;
+import com.faw.usertestall.util.ValidationUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +51,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageResult query(PageQuery<UserQueryDTO> pageQuery) {
+
+        ValidationUtil.validate(pageQuery);
 
         Page page = new Page(pageQuery.getPageNo(), pageQuery.getPageSize());
 

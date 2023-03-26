@@ -1,5 +1,7 @@
 package com.faw.usertestall.domain.common;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 
 /**
@@ -13,11 +15,13 @@ public class PageQuery<T> implements Serializable {
     /**
      * 当前页
      */
+    @Min(value = 1, message = "页号必须为正整数")
     private Integer pageNo = 1;
 
     /**
      * 每页条数
      */
+    @Max(value = 100, message = "每页不得超过100条")
     private Integer pageSize = 10;
 
     /**

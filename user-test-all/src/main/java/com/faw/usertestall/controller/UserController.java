@@ -8,10 +8,18 @@ import com.faw.usertestall.domain.dto.UserDTO;
 import com.faw.usertestall.domain.dto.UserQueryDTO;
 import com.faw.usertestall.domain.vo.UserVO;
 import com.faw.usertestall.service.UserService;
+import com.faw.usertestall.util.InsertValidationGroup;
+import com.faw.usertestall.util.UpdateValidationGroup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,10 +30,12 @@ import java.util.stream.Stream;
  * @date 2023/03/15
  */
 
+@Validated
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Resource
     UserService userService;
 
@@ -36,8 +46,10 @@ public class UserController {
      * @return int
      * @author 鹿胜宝
      */
+    @CacheEvict(cacheNames = "user-cache")
     @PostMapping
-    public Result save(@RequestBody UserDTO userDTO) {
+    public Result save(@Validated(InsertValidationGroup.class)
+                       @RequestBody UserDTO userDTO) {
         int save = userService.save(userDTO);
         if (save == 1) {
             return Result.success();
@@ -47,7 +59,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public Result update(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
+    public Result update(@NotNull(message = "id不能为空") @PathVariable("id") Long id,
+                         @Validated(UpdateValidationGroup.class) @RequestBody UserDTO userDTO) {
         int update = userService.update(id, userDTO);
         if (update == 1) {
             return Result.success();
@@ -66,6 +79,7 @@ public class UserController {
         }
     }
 
+//    @Cacheable(cacheNames = "user-cache", key = "#root.methodName + '_' + #root.args[0] + #root.args[1]")
     @GetMapping
     public Result<PageResult> get(Integer pageNo, Integer pageSize, UserQueryDTO queryDTO) {
 
@@ -74,6 +88,9 @@ public class UserController {
         Optional.ofNullable(pageNo).ifPresent(pageQuery::setPageNo);
         Optional.ofNullable(pageSize).ifPresent(pageQuery::setPageSize);
         pageQuery.setQuery(queryDTO);
+        if (logger.isInfoEnabled()) {
+            logger.info("未使用缓存");
+        }
         //查询
         PageResult<List<UserDTO>> pageResult = userService.query(pageQuery);
 
@@ -93,7 +110,7 @@ public class UserController {
 
         //封装返回结果
         PageResult<List<UserVO>> result = new PageResult<>();
-        BeanUtils.copyProperties(pageResult,result);
+        BeanUtils.copyProperties(pageResult, result);
         result.setData(userVOList);
         return Result.success(result);
     }

@@ -19,12 +19,12 @@
 			<property name="forceBigDecimals" value="false"/>
 		</javaTypeResolver>
 		<!-- 生成VO的包名和位置-->
-		<javaModelGenerator targetPackage="com.faw.usertestall.domain.vo" targetProject="src/main/java">
+		<javaModelGenerator targetPackage="com.faw.usertestall.domain.entity.gen" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true"/>
 			<property name="trimStrings" value="true"/>
 		</javaModelGenerator>
 		<!-- 生成XML文件的包名和位置-->
-		<sqlMapGenerator targetPackage="com.faw.mapper" targetProject="src/main/resources">
+		<sqlMapGenerator targetPackage="com.faw.mapper.gen" targetProject="src/main/resources">
 			<property name="enableSubPackages" value="true"/>
 		</sqlMapGenerator>
 		<!-- 生成MAPPER的包名和位置-->
@@ -32,9 +32,9 @@
 			<property name="enableSubPackages" value="true"/>
 		</javaClientGenerator>
 		<!-- 要从哪些表生成-->
-		<table tableName="tb_user"
-			   domainObjectName="User"
-			   mapperName="UserMapper"
+		<table tableName="tb_dept"
+			   domainObjectName="Dept"
+			   mapperName="DeptMapper"
 			   enableCountByExample="true"
 			   enableUpdateByExample="true"
 			   enableDeleteByExample="true"

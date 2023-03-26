@@ -1,9 +1,6 @@
 package com.faw.usertestall.domain.entity;
   
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,8 +13,7 @@ public class UserDO implements Serializable {
 	 */    
     private static final long serialVersionUID = -589896086247509038L;  
   
-    /*** 用户主信息 ***/
-    /**     * 用户名  
+    /**     * 用户名
      */  
     private String username;  
   
@@ -41,43 +37,48 @@ public class UserDO implements Serializable {
      */  
     private String phone;  
   
-  
-    /*** 系统主信息 ***/
     /**
      * 数据库主键
      */
     @TableId(type = IdType.ASSIGN_ID)
-    @Version
     private Long id;  
   
     /**  
      * 数据的创建时间  
-     */  
+     */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime created;  
   
     /**  
      * 数据修改时间  
-     */  
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime modified;  
   
     /**  
      * 创建者  
-     */  
+     */
+    @TableField(fill = FieldFill.INSERT)
     private String creator;  
   
     /**  
      * 最后修改者  
-     */  
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String operator;  
   
     /**  
      * 逻辑删除字段：0：正常，1：逻辑删除  
-     */  
+     */
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic
     private Integer deleted;  
   
     /**  
      * 版本号  
-     */  
+     */
+    @TableField(fill = FieldFill.INSERT)
+    @Version
     private Long version;  
   
     public String getUsername() {  
