@@ -240,6 +240,43 @@ Bean Validation 只提供规范，不提供具体的实现。因此实际使用�
 logging.pattern.console=%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([%X{traceId}]){yellow} %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n
 ```
 
+### 文件上传下载
+1. 文件上传的Controller，负责处理文件上传
+2. 文件上传的服务接口，通过接口的形式来定义出文件上传的功能
+3. 实现文件上传业务逻辑
+4. 文件下载，采用静态路径映射的方式实现
+
+```properties
+# 不限制大小
+spring.servlet.multipart.max-file-size=-1
+```
+### Eecel导出功能
+1. pom.xml把相关的jar配置好
+```xml
+<!-- EasyExcel相关支持 -->  
+<dependency>  
+   <groupId>com.alibaba</groupId>  
+   <artifactId>easyexcel</artifactId>  
+   <version>3.2.1</version>  
+</dependency>
+```
+2. UserController新增加数据导出方法
+3. ExcelService新增数据导出服务
+4. 实现数据查询并导出到excel中
+   a. 需要创建一个EasyExcel导出对象
+   b. 分页查询加载数据
+   c. 导出分页数据到excel中
+   d. 关闭excel文件流
+5. 实现excel文件上传
+
+### 服务异步化
+1. 先创建线程池 ThreadPoolConfig
+2. 开启异步功能 @EnableAsync
+3. 将导出方法使用 @Async 注解标记为异步执行
+
+
+
+
 
 
 

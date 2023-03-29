@@ -7,6 +7,7 @@ import com.faw.usertestall.domain.common.Result;
 import com.faw.usertestall.domain.dto.UserDTO;
 import com.faw.usertestall.domain.dto.UserQueryDTO;
 import com.faw.usertestall.domain.vo.UserVO;
+import com.faw.usertestall.service.ExcelService;
 import com.faw.usertestall.service.UserService;
 import com.faw.usertestall.util.InsertValidationGroup;
 import com.faw.usertestall.util.UpdateValidationGroup;
@@ -14,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +38,8 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Resource
     UserService userService;
+    @Resource
+    ExcelService excelService;
 
     /**
      * 保存
@@ -113,5 +115,19 @@ public class UserController {
         BeanUtils.copyProperties(pageResult, result);
         result.setData(userVOList);
         return Result.success(result);
+    }
+
+    /**
+     * 数据查询并导出excel
+     *
+     * @param fileName 文件名称
+     * @param queryDTO 查询dto
+     * @return {@link Result }<{@link Boolean }>
+     * @author 鹿胜宝
+     */
+    @GetMapping("/export")
+    public Result<Boolean> export(String fileName, UserQueryDTO queryDTO) {
+        excelService.asyncExport(fileName, queryDTO);
+        return Result.success(Boolean.TRUE);
     }
 }

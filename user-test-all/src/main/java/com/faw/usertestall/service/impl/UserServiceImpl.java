@@ -1,4 +1,4 @@
-package com.faw.usertestall.service;
+package com.faw.usertestall.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -9,6 +9,7 @@ import com.faw.usertestall.domain.dto.UserDTO;
 import com.faw.usertestall.domain.dto.UserQueryDTO;
 import com.faw.usertestall.domain.entity.UserDO;
 import com.faw.usertestall.mapper.UserMapper;
+import com.faw.usertestall.service.UserService;
 import com.faw.usertestall.util.ValidationUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

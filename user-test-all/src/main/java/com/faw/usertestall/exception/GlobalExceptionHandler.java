@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
+ * 全局异常处理器
+ *
  * @author 鹿胜宝
  * @date 2023/03/15
  */
@@ -16,6 +18,13 @@ public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+    /**
+     * 业务异常处理
+     *
+     * @param e e
+     * @return {@link Result }
+     * @author 鹿胜宝
+     */
     @ResponseBody
     @ExceptionHandler(value = BusinessException.class)
     public Result businessExceptionHandle(BusinessException e) {
@@ -23,6 +32,13 @@ public class GlobalExceptionHandler {
         return Result.fail(e);
     }
 
+    /**
+     * 运行时异常处理
+     *
+     * @param e e
+     * @return {@link Result }
+     * @author 鹿胜宝
+     */
     @ResponseBody
     @ExceptionHandler(value = RuntimeException.class)
     public Result runtimeExceptionHandle(RuntimeException e) {
@@ -30,6 +46,13 @@ public class GlobalExceptionHandler {
         return Result.fail(e);
     }
 
+    /**
+     * 其它异常处理
+     *
+     * @param e e
+     * @return {@link Result }
+     * @author 鹿胜宝
+     */
     @ResponseBody
     @ExceptionHandler(value = Throwable.class)
     public Result throwableHandle(Exception e) {

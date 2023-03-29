@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
+ * TraceId过滤器
+ *
  * @author 鹿胜宝
  * @date 2023/03/22
  */
@@ -27,7 +29,7 @@ public class TraceIdFilter implements Filter {
         if (StringUtils.isEmpty(traceId)) {
             traceId = UUID.randomUUID().toString();
         }
-        MDC.put(TRACE_ID,traceId);
+        MDC.put(TRACE_ID, traceId);
 
         filterChain.doFilter(servletRequest, servletResponse);
     }

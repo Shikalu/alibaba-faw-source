@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 限流拦截器
+ *
  * @author 鹿胜宝
  * @date 2023/03/22
  */
@@ -27,9 +29,9 @@ public class RateLimitInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if(!rateLimiter.tryAcquire()){
+        if (!rateLimiter.tryAcquire()) {
             logger.error("系统被限流了");
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR,"系统被限流了");
+            throw new BusinessException(ErrorCode.RATE_LIMIT_ERROR);
         }
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }

@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class UserDTO implements Serializable {
 
@@ -54,6 +55,11 @@ public class UserDTO implements Serializable {
     @NotNull(message = "版本号不能为空", groups = UpdateValidationGroup.class)
     private Long version;
 
+    /**
+     * 创建时间
+     */
+    private LocalDateTime created;
+
     public String getUsername() {
         return username;
     }
@@ -100,5 +106,13 @@ public class UserDTO implements Serializable {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 }

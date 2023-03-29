@@ -18,9 +18,9 @@ public class ValidationUtil {
         Set<ConstraintViolation<T>> validate = validator.validate(object, groups);
 
         //如果校验结果不为空
-        if(!CollectionUtils.isEmpty(validate)) {
+        if (!CollectionUtils.isEmpty(validate)) {
             StringBuilder exceptionMessage = new StringBuilder();
-            validate.forEach(constraintViolation-> {
+            validate.forEach(constraintViolation -> {
                 exceptionMessage.append(constraintViolation.getMessage());
             });
 

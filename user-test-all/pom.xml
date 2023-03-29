@@ -58,19 +58,19 @@
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.1.1</version>
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <artifactId>mybatis</artifactId>-->
-<!--                    <groupId>org.mybatis</groupId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
+            <!--            <exclusions>-->
+            <!--                <exclusion>-->
+            <!--                    <artifactId>mybatis</artifactId>-->
+            <!--                    <groupId>org.mybatis</groupId>-->
+            <!--                </exclusion>-->
+            <!--            </exclusions>-->
         </dependency>
         <!-- 指定mybatis版本 -->
-<!--        <dependency>-->
-<!--            <groupId>org.mybatis</groupId>-->
-<!--            <artifactId>mybatis</artifactId>-->
-<!--            <version>3.5.0-SNAPSHOT</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.mybatis</groupId>-->
+        <!--            <artifactId>mybatis</artifactId>-->
+        <!--            <version>3.5.0-SNAPSHOT</version>-->
+        <!--        </dependency>-->
         <!-- mybatis plus支持 -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -96,6 +96,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>28.0-jre</version>
+        </dependency>
+        <!-- EasyExcel相关支持 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>3.2.1</version>
         </dependency>
     </dependencies>
 
