@@ -10,9 +10,7 @@ import com.faw.usertestall.service.ExcelService;
 import com.faw.usertestall.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
@@ -30,6 +28,9 @@ public class UserControllerTest {
 
     @Mock
     private ExcelService excelService;
+
+    @Captor
+    private ArgumentCaptor<PageQuery<UserQueryDTO>> argCaptor;
 
 
     @Test
@@ -91,21 +92,29 @@ public class UserControllerTest {
         Integer pageSize = 20;
         UserQueryDTO queryDTO = new UserQueryDTO();
 
+        //-------mock返回值
+        PageResult<List<UserDTO>> listPageResult = new PageResult<>();
+        List<UserDTO> userDTOS = new ArrayList<>();
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername("lilei");
         userDTO.setPassword("12345");
         userDTO.setEmail("7899@qq.com");
         userDTO.setAge(11);
         userDTO.setPhone("12433453212");
-        List<UserDTO> userDTOS = new ArrayList<>();
         userDTOS.add(userDTO);
-        PageResult<List<UserDTO>> listPageResult = new PageResult<>();
         listPageResult.setData(userDTOS);
 
         //when
         Mockito.when(userService.query(Mockito.any(PageQuery.class))).thenReturn(listPageResult);
+
         //then
         Result get = userController.get(pageNo, pageSize, queryDTO);
+
+        //------验证PageQuery参数
+        Mockito.verify(userService).query(argCaptor.capture());
+        assert (Objects.equals(argCaptor.getValue().getPageNo(), 1)
+                && Objects.equals(argCaptor.getValue().getPageSize(), 20));
+
         List<UserVO> data = ((PageResult<List<UserVO>>) get.getData()).getData();
         assert (Objects.equals(data.get(0).getPassword(), "******")
                 && Objects.equals(data.get(0).getUsername(), "lilei")
